@@ -1,7 +1,7 @@
 
 name: Build KAEL Music APK
 
-on:
+'on':
   workflow_dispatch:
   push:
     branches:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download project repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Java
@@ -21,19 +21,8 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Build debug APK
+      - name: Build APK
         run: |
           unzip -o Kael-main.zip -d project
-          cd project/SMusic-main
-          chmod +x gradlew
-          ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: KAEL-Music-APK
-          path: project/SMusic-main/app/build/outputs/apk/debug/*.apk
+          find project -name gradlew -type f
           
